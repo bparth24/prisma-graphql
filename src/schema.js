@@ -2,8 +2,7 @@ const { gql } = require('apollo-server')
 const { prisma } = require('./db')
 
 const typeDefs = gql`
-  
- type User {
+  type User {
     email: String!
     id: ID!
     name: String
@@ -15,6 +14,7 @@ const typeDefs = gql`
     id: ID!
     published: Boolean!
     title: String!
+    author: User
   }
 
   type Query {
@@ -54,8 +54,7 @@ const resolvers = {
       })
     },
   },
- 
- Mutation: {
+  Mutation: {
     createDraft: (parent, args) => {
       return prisma.post.create({
         data: {
@@ -88,8 +87,7 @@ const resolvers = {
       })
     },
   },
- 
- User: {
+  User: {
     posts: (parent, args) => {
       return prisma.user
         .findOne({
@@ -98,8 +96,7 @@ const resolvers = {
         .posts()
     },
   },
- 
- Post: {
+  Post: {
     author: (parent, args) => {
       return prisma.post
         .findOne({
